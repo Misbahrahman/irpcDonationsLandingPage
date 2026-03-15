@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   width: "device-width",
-  initialScale: 1,
+  initialScale: 0.67,
   maximumScale: 5,
   themeColor: "#1E4ED8",
 };
@@ -73,6 +73,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* Viewport Meta Tag - Set to 67% zoom */}
+        <meta name="viewport" content="width=device-width, initial-scale=0.67, maximum-scale=5" />
+
         {/* Razorpay Script - Preconnect for performance */}
         <link rel="preconnect" href="https://checkout.razorpay.com" />
         <link rel="dns-prefetch" href="https://checkout.razorpay.com" />

@@ -11,29 +11,7 @@ export const loadRazorpayScript = (): Promise<boolean> => {
   });
 };
 
-// Create Razorpay order
-export const createRazorpayOrder = async (amount: number): Promise<any> => {
-  try {
-    const response = await fetch('/api/create-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ amount }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create order');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error creating order:', error);
-    throw error;
-  }
-};
-
-// Open Razorpay checkout
+// Open Razorpay checkout (simplified - no backend order creation)
 export const openRazorpayCheckout = async (
   amount: number,
   onSuccess: (response: RazorpayResponse) => void,
@@ -46,17 +24,14 @@ export const openRazorpayCheckout = async (
       throw new Error('Failed to load Razorpay SDK');
     }
 
-    // Create order
-    const orderData = await createRazorpayOrder(amount);
-
-    // Razorpay options
+    // Razorpay options - direct payment without order creation
     const options: RazorpayOptions = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || '',
+      key: 'rzp_live_RSC2DE2QNKnazG',
       amount: amount * 100, // Convert to paise
       currency: 'INR',
-      name: 'Islamic Research & Propagation Center',
-      description: 'Support Dawah & Change Lives',
-      order_id: orderData.orderId,
+      name: 'IRPC India',
+      description: 'Donation',
+      image: 'https://irpcindia.com/wp-content/uploads/2020/11/cropped-irpc-logo-copy-2.png',
       handler: onSuccess,
       prefill: {
         name: '',
@@ -64,7 +39,7 @@ export const openRazorpayCheckout = async (
         contact: '',
       },
       theme: {
-        color: '#1E4ED8',
+        color: '#6366f1',
       },
     };
 

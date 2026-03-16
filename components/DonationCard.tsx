@@ -7,10 +7,10 @@ import { openRazorpayCheckout, formatCurrency } from '@/lib/razorpay';
 import { DonationAmount } from '@/types/donation';
 
 const presetAmounts: DonationAmount[] = [
+  { value: 100, label: '₹100' },
   { value: 500, label: '₹500' },
   { value: 1000, label: '₹1000' },
   { value: 5000, label: '₹5000' },
-  { value: 10000, label: '₹10000' },
 ];
 
 export default function DonationCard() {
@@ -140,7 +140,7 @@ export default function DonationCard() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 mb-2"
               >
-                ₹54,000
+                ₹21000
               </motion.h2>
               <p className="text-sm sm:text-base text-gray-600 font-medium">
                 raised of <span className="text-gray-900 font-bold">₹1,00,000</span> goal
@@ -152,7 +152,7 @@ export default function DonationCard() {
               <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: '54%' }}
+                  animate={{ width: '21%' }}
                   transition={{ duration: 1.5, ease: "easeOut", delay: 0.4 }}
                   className="absolute inset-y-0 left-0 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"
                 >

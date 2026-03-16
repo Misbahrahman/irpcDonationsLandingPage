@@ -1,13 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// NOTE: This is a placeholder API route for Razorpay order creation
-// The user mentioned they have an existing backend endpoint
-// This serves as a reference implementation
-
-// In production, you would:
-// 1. Install Razorpay SDK: npm install razorpay
-// 2. Import Razorpay: import Razorpay from 'razorpay';
-// 3. Initialize with your keys from environment variables
+import Razorpay from 'razorpay';
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,14 +12,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // PLACEHOLDER: Replace with actual Razorpay integration
-    // Example implementation:
-    /*
+    // Validate environment variables
+    if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+      console.error('Razorpay credentials not configured');
+      return NextResponse.json(
+        { error: 'Payment gateway not configured' },
+        { status: 500 }
+      );
+    }
+
+    // Initialize Razorpay instance
     const razorpay = new Razorpay({
-      key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-      key_secret: process.env.RAZORPAY_KEY_SECRET!,
+      key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
+    // Create order options
     const options = {
       amount: amount * 100, // Convert to paise
       currency: 'INR',
@@ -38,23 +38,13 @@ export async function POST(request: NextRequest) {
       },
     };
 
+    // Create Razorpay order
     const order = await razorpay.orders.create(options);
 
     return NextResponse.json({
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
-    });
-    */
-
-    // Temporary mock response for development
-    console.log('⚠️ MOCK RAZORPAY ORDER - Replace with actual implementation');
-
-    return NextResponse.json({
-      orderId: `order_mock_${Date.now()}`,
-      amount: amount * 100,
-      currency: 'INR',
-      note: 'This is a mock order. Implement actual Razorpay integration.',
     });
 
   } catch (error) {
